@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
+
+# Build
+dist/
+.next/
+*.tsbuildinfo
+
+# Elixir / Phoenix
+apps/api/_build/
+apps/api/deps/
+apps/api/cover/
+apps/api/.mix/
+*.ez
+
+# Foundry
+packages/contracts/out/
+packages/contracts/cache/
+packages/contracts/broadcast/
+
+# Env (do not commit)
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+# Turbo
+.turbo/

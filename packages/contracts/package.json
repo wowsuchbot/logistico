@@ -1,0 +1,9 @@
+{
+  "name": "@logistics/contracts",
+  "private": true,
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "clean": "forge clean"
+  }
+}

@@ -1,0 +1,70 @@
+export const LogisticsZoneAbi = [
+  {
+    type: "event",
+    name: "JobStarted",
+    inputs: [
+      { name: "zoneId", type: "bytes32", indexed: true },
+      { name: "orderTokenId", type: "uint256", indexed: true },
+      { name: "laborerTokenId", type: "uint256", indexed: true },
+      { name: "laborerTBA", type: "address", indexed: false },
+      { name: "startedAt", type: "uint256", indexed: false },
+    ],
+  },
+  {
+    type: "event",
+    name: "JobAttested",
+    inputs: [
+      { name: "zoneId", type: "bytes32", indexed: true },
+      { name: "orderTokenId", type: "uint256", indexed: true },
+      { name: "laborerTokenId", type: "uint256", indexed: true },
+      { name: "proofData", type: "bytes", indexed: false },
+      { name: "attestedAt", type: "uint256", indexed: false },
+    ],
+  },
+  {
+    type: "event",
+    name: "JobCompleted",
+    inputs: [
+      { name: "zoneId", type: "bytes32", indexed: true },
+      { name: "orderTokenId", type: "uint256", indexed: true },
+      { name: "laborerTokenId", type: "uint256", indexed: true },
+      { name: "laborerTBA", type: "address", indexed: false },
+      { name: "completedAt", type: "uint256", indexed: false },
+    ],
+  },
+  {
+    type: "function",
+    name: "zoneId",
+    inputs: [],
+    outputs: [{ name: "", type: "bytes32" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "tenantId",
+    inputs: [],
+    outputs: [{ name: "", type: "string" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "laborerNFT",
+    inputs: [],
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "orderNFT",
+    inputs: [],
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "jobSBT",
+    inputs: [],
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+  },
+] as const;

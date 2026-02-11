@@ -1,0 +1,10 @@
+{
+  "name": "@logistics/api",
+  "private": true,
+  "scripts": {
+    "dev": "mix phx.server",
+    "build": "echo 'No JS build'",
+    "test": "mix test",
+    "clean": "mix clean"
+  }
+}
