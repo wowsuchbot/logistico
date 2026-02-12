@@ -13,10 +13,21 @@ Logistics-as-a-Service where **Laborers** (Bikes, Drones, or AI Bots) and **Orde
 
 ## Smart Contracts
 
+### Core Logistics System
+
 - **LogisticsFactory**: Uses OpenZeppelin `Clones` (ERC-1167) to deploy tenant-specific `LogisticsZone` instances.
 - **LogisticsZone**: Manages `LaborerNFT`, `OrderNFT`, and `JobSBT`; emits `JobStarted`, `JobAttested`, `JobCompleted` for indexing.
 - **LaborerNFT** / **OrderNFT**: ERC-721 with TBA per token; Laborer supports `zk_proof_commitment` for Personhood/Bot certification.
-- **JobSBT**: Non-transferable tokens minted to a Laborer’s TBA on order completion.
+- **JobSBT**: Non-transferable tokens minted to a Laborer's TBA on order completion.
+
+### Global Marketplace (NEW)
+
+- **ServiceMarketplace**: Enables service discovery beyond zone boundaries with three scopes:
+  - `GLOBAL` — Services available worldwide (e.g., design, consulting, virtual work)
+  - `REGIONAL` — Multi-zone services spanning geographic areas
+  - `LOCAL` — Zone-specific services (backward compatible with existing system)
+  
+  Features: Escrow-based payments, platform fees (0-10%), delivery verification, order lifecycle management, and full compatibility with existing LogisticsZone contracts.
 
 ### Build & Test (Contracts)
 
@@ -24,6 +35,9 @@ Logistics-as-a-Service where **Laborers** (Bikes, Drones, or AI Bots) and **Orde
 cd packages/contracts
 forge build
 forge test
+
+# Test ServiceMarketplace specifically
+forge test --match-contract ServiceMarketplaceTest
 ```
 
 ## Backend (Phoenix)
@@ -66,24 +80,6 @@ npm run dev
 
 Future integration with edge hardware for offline-capable notarization and mesh connectivity:
 
-- **nRF52840**: BLE/Thread SoC for low-power laborer devices (bikes, drones, lockers). Firmware can sign attestations or collect sensor data; commitments can be submitted when back online.
-- **LoRa mesh**: Long-range, low-bandwidth mesh for fleet units in areas with poor cellular coverage. Offline job completion proofs can be stored locally and notarized in batch when a gateway is reached.
-- **Offline notarization**: Devices sign job completion payloads (order id, laborer id, nonce, hash). API accepts these with a “pending notarization” state; a background job or relay submits them on-chain when RPC is available, then updates indexer state and PubSub.
-
-Suggested layout for a future `packages/firmware` or `apps/edge` repo:
-
-- nRF52840: Zephyr or nRF Connect SDK; BLE GATT service for job ids and signing requests; secure storage for keys.
-- LoRa: LoRaWAN or custom mesh stack; minimal payload (order + laborer ids + signature); gateway service that buffers and forwards to API/chain.
-
-This keeps the current codebase focused on API and contracts while documenting the path to hardware-backed, offline-first attestations.
-
----
-
-## Monorepo Commands
-
-From repo root:
-
-- `npm run build` — build all packages/apps  
-- `npm run dev` — run dev for all (Turbo)  
-- `npm run test` — run tests  
-- `npm run lint` — lint
+- **nRF52840**: BLE/Thread SoC for low-power laborer tags
+- **Raspberry Pi Zero 2 W**: Portable gateway node for offline mesh networks
+- **Secure Element** (ATECC608B, SE050x): Secure key storage for TBA private keys
